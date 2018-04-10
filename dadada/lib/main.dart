@@ -46,8 +46,9 @@ class SetApp extends StatelessWidget{
         // "hot reload" (press "r" in the console where you ran "flutter run",
         // or press Run > Flutter Hot Reload in IntelliJ). Notice that the
         // counter didn't reset back to zero; the application is not restarted.
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.brown,
       ),
+
       home: new Scaffold(
 //        appBar: new AppBar(
 //          title: new Text('Welcome to Flutter'),
@@ -72,6 +73,7 @@ class RandomWordsState extends State<RandomWords> {
   final _saved = new Set<WordPair>();
   final _biggerFont = const TextStyle(fontSize: 18.0);
 
+
   @override
   Widget build(BuildContext context) {
 //    final wordPair = new WordPair.random();
@@ -82,7 +84,10 @@ class RandomWordsState extends State<RandomWords> {
         title: new Text('Startup Name Generator'),
         actions: <Widget>[
           new IconButton(icon: new Icon(Icons.list), onPressed: _pushSaved),
+//          new IconButton(icon: new Icon(Icons.linked_camera), onPressed: _pushSaved),
         ],
+//        leading:new Text('测试',style: _biggerFont,textAlign:TextAlign.center),
+//        automaticallyImplyLeading:false,
       ),
 
       body: _buildSuggestions(),
@@ -95,7 +100,7 @@ class RandomWordsState extends State<RandomWords> {
         builder: (context) {
           final tiles = _saved.map(
                 (pair) {
-              return new ListTile(
+              return new ListTile(//瓦片
                 title: new Text(
                   pair.asPascalCase,
                   style: _biggerFont,
