@@ -13,14 +13,17 @@ class RandomWordsState extends State<RandomWords> {
 
   Widget _buildSuggestions() {
     return new ListView.builder(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(0.0),
         // 对于每个建议的单词对都会调用一次itemBuilder，然后将单词对添加到ListTile行中
         // 在偶数行，该函数会为单词对添加一个ListTile row.
         // 在奇数行，该行书湖添加一个分割线widget，来分隔相邻的词对。
         // 注意，在小屏幕上，分割线看起来可能比较吃力。
         itemBuilder: (context, i) {
           // 在每一列之前，添加一个1像素高的分隔线widget
-          if (i.isOdd) return new Divider();
+          if (i.isOdd) return new Container(
+            padding: EdgeInsets.only(left: 16.0,right: 16.0),
+            child: new Divider(),
+          );
 
           // 语法 "i ~/ 2" 表示i除以2，但返回值是整形（向下取整），比如i为：1, 2, 3, 4, 5
           // 时，结果为0, 1, 1, 2, 2， 这可以计算出ListView中减去分隔线后的实际单词对数量
@@ -41,11 +44,45 @@ class RandomWordsState extends State<RandomWords> {
     return new Scaffold(
       appBar: new AppBar(
         title: new Text('Startup Name Generator'),
+        actions:<Widget>[
+          new IconButton(icon: new Icon(Icons.list), onPressed:_pushSaved)
+        ],
       ),
       body: _buildSuggestions(),
     );
   }
+  void _pushSaved(){
+    Navigator.of(context).push(
+      new MaterialPageRoute(
+        builder: (context) {
+          final tiles = _saved.map(
+                (pair) {
+              return new ListTile(
+                title: new Text(
+                  pair.asPascalCase,
+                  style: _biggerFont,
+                ),
+              );
+            },
+          );
+          final divided = ListTile
+              .divideTiles(
+            context: context,
+            tiles: tiles,
+          )
+              .toList();
 
+          return new Scaffold(
+            appBar: new AppBar(
+              title: new Text('Saved Suggestions'),
+            ),
+            body: new ListView(children: divided),
+          );
+
+        },
+      ),
+    );
+  }
   Widget _buildRow(WordPair pair) {
 
 
@@ -58,6 +95,9 @@ class RandomWordsState extends State<RandomWords> {
       trailing: new Icon(
         alreadySaved ? Icons.favorite : Icons.favorite_border,
         color: alreadySaved ? Colors.red : null,
+        size: 40.0,
+          semanticLabel:'和信金融',
+
       ),
       onTap: () {
         setState(() {
