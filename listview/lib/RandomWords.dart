@@ -8,8 +8,9 @@ class RandomWords extends StatefulWidget {
 
 class RandomWordsState extends State<RandomWords> {
   final _suggestions = <WordPair>[];
-
+  final _saved = new Set<WordPair>();
   final _biggerFont = const TextStyle(fontSize: 18.0);
+
   Widget _buildSuggestions() {
     return new ListView.builder(
         padding: const EdgeInsets.all(16.0),
@@ -30,15 +31,14 @@ class RandomWordsState extends State<RandomWords> {
             _suggestions.addAll(generateWordPairs().take(10));
           }
           return _buildRow(_suggestions[index]);
-        }
-    );
+        });
   }
 
   Widget build(BuildContext context) {
 //    final wordPair = new WordPair.random(); // 删除这两行
 //    return new Text(wordPair.asPascalCase);
 
-    return new Scaffold (
+    return new Scaffold(
       appBar: new AppBar(
         title: new Text('Startup Name Generator'),
       ),
@@ -46,14 +46,66 @@ class RandomWordsState extends State<RandomWords> {
     );
   }
 
-
   Widget _buildRow(WordPair pair) {
+
+
+    final alreadySaved = _saved.contains(pair);
     return new ListTile(
       title: new Text(
         pair.asPascalCase,
         style: _biggerFont,
       ),
+      trailing: new Icon(
+        alreadySaved ? Icons.favorite : Icons.favorite_border,
+        color: alreadySaved ? Colors.red : null,
+      ),
+      onTap: () {
+        setState(() {
+          if (alreadySaved) {
+            _saved.remove(pair);
+          } else {
+            _saved.add(pair);
+          }
+        });
+      },
     );
-  }
 
+
+//    return new ListTile(
+//        title: new Container(
+//          padding: EdgeInsets.all(20.0),
+//          child: new Column(
+//            children: [
+//              Container(
+//                height: 80.0,
+//                child: new Text(
+//                  pair.asCamelCase,
+//                  style: const TextStyle(fontSize: 18.0),
+//                ),
+//                decoration: new BoxDecoration(
+//                    borderRadius: new BorderRadius.circular(3.0),
+//                    color: const Color(0xffe71d36),
+//                    border: new Border.all(
+//                      color: const Color(0xFF000000),
+//                      width: 1.0,
+//                      style: BorderStyle.solid,
+//                    )),
+//              ),
+//            ],
+//          ),
+//          color: Color(0xffcccccc),
+//        ),
+//        subtitle: new Container(
+//          child: new Text(
+//            '12314',
+//            style: new TextStyle(
+//              color: const Color(0xffe71d36),
+//            ),
+//          ),
+//          padding: EdgeInsets.only(
+//            top: 10.0,
+//          ),
+//          color: Color(0xffffff36),
+//        ));
+  }
 }
