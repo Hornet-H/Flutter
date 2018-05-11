@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
+import 'package:listview/BeautifulImagePage.dart';
 
 class RandomWords extends StatefulWidget {
   @override
@@ -45,12 +46,22 @@ class RandomWordsState extends State<RandomWords> {
       appBar: new AppBar(
         title: new Text('Startup Name Generator'),
         actions:<Widget>[
-          new IconButton(icon: new Icon(Icons.list), onPressed:_pushSaved)
+          new IconButton(icon: new Icon(Icons.list), onPressed:_pushSaved),
+          new IconButton(icon: new Icon(Icons.live_help), onPressed: _pushBeautifulPage)
         ],
       ),
       body: _buildSuggestions(),
     );
   }
+
+  void _pushBeautifulPage(){
+    Navigator.push(
+      context,
+      new MaterialPageRoute(builder: (context) => new BeautifulImagePage()),
+    );
+  }
+
+
   void _pushSaved(){
     Navigator.of(context).push(
       new MaterialPageRoute(
@@ -83,6 +94,11 @@ class RandomWordsState extends State<RandomWords> {
       ),
     );
   }
+
+
+
+
+
   Widget _buildRow(WordPair pair) {
 
 
