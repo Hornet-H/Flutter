@@ -166,13 +166,15 @@
 //  }
 //}
 
-
-
-
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
 import 'package:listview/BeautifulImagePage.dart';
+import 'package:listview/DouBanPage.dart';
+import 'package:listview/GridViewExtendPage.dart';
+import 'package:listview/GridViewPage.dart';
+import 'package:listview/GridViewPageTwoCasePage.dart';
 import 'package:listview/WindowUtils.dart';
+import 'package:listview/grid_list_demo.dart';
 
 class RandomWords extends StatefulWidget {
   @override
@@ -181,10 +183,10 @@ class RandomWords extends StatefulWidget {
 
 class RandomWordsState extends State<RandomWords> {
   final _showText = <String>[
-    'GridView',
+    'GridView组件Sliver GridDelegate With Fixed CrossAxis Count',
     '豆瓣ListView展示',
-    'GridView',
-    'GridView',
+    'GridView.Extend组件',
+    'GridView组件Sliver GridDelegate With Fixed Cross Axis Count',
     'GridView',
     'GridView',
     'GridView',
@@ -195,14 +197,23 @@ class RandomWordsState extends State<RandomWords> {
     'GridView'
   ];
 
+  final _pages = <Map<String, Widget>>[
+    {'page': new GridViewPage()},
+    {'page': new DouBanPage()},
+    {'page': new GridViewExtendPage()},
+    {'page': new GridViewPageTwoCasePage()},
+  ];
+
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
         centerTitle: true,
         title: new Text('测试'),
         actions: <Widget>[
-          new IconButton(icon: new Icon(Icons.list), onPressed: _pushBeautifulPage),
-          new IconButton(icon: new Icon(Icons.live_help), onPressed: null)
+          new IconButton(
+              icon: new Icon(Icons.list), onPressed: _pushBeautifulPage),
+          new IconButton(
+              icon: new Icon(Icons.live_help), onPressed: _pushOfficialPage)
         ],
       ),
       body: _buildListView(),
@@ -219,23 +230,32 @@ class RandomWordsState extends State<RandomWords> {
 
   _buildListItem(BuildContext context, int index) {
     return new GestureDetector(
-      onTap: (){
+      onTap: () {
         _pushNextPage(index);
       },
       child: new Container(
           width: WindowUtils.getScreenWidth(),
-          height: 44.0,
+          height: 64.0,
           padding: new EdgeInsets.all(0.0),
           color: new Color(0xFFe8e8e8),
           child: new Column(
             children: <Widget>[
               new Expanded(
                   child: new Container(
-                    child: new Row(
-                      children: <Widget>[new Text(_showText[index])],
-                    ),
-                    padding: new EdgeInsets.only(left: 16.0, right: 16.0),
-                  )),
+                width: WindowUtils.getScreenWidth(),
+                child: new Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    new Text(
+                      _showText[index],
+                      softWrap: true,
+                      textAlign: TextAlign.left,
+                      maxLines: 2,
+                    )
+                  ],
+                ),
+                padding: new EdgeInsets.only(left: 16.0, right: 16.0, top: 8.0),
+              )),
               new Padding(
                 padding: new EdgeInsets.only(top: 8.0, left: 16.0, right: 16.0),
                 child: new Divider(
@@ -249,14 +269,24 @@ class RandomWordsState extends State<RandomWords> {
     );
   }
 
-  _pushBeautifulPage(){
+  _pushOfficialPage() {
+    Navigator.push(
+      context,
+      new MaterialPageRoute(builder: (context) => new GridListDemo()),
+    );
+  }
+
+  _pushBeautifulPage() {
     Navigator.push(
       context,
       new MaterialPageRoute(builder: (context) => new BeautifulImagePage()),
     );
   }
-  _pushNextPage(int index){
-   Navigator.of(context).push(new MaterialPageRoute(builder: (context) => new BeautifulImagePage()));
-  }
 
+  _pushNextPage(int index) {
+    Widget targetPage = _pages[index]['page'];
+    Navigator
+        .of(context)
+        .push(new MaterialPageRoute(builder: (context) => targetPage));
+  }
 }
