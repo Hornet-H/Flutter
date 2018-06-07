@@ -84,14 +84,7 @@ packages:
       name: cupertino_icons
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.1"
-  english_words:
-    dependency: "direct main"
-    description:
-      name: english_words
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.1.0"
+    version: "0.1.2"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -395,4 +388,4 @@ packages:
     source: hosted
     version: "2.1.13"
 sdks:
-  dart: ">=2.0.0-dev.23.0 <=2.0.0-edge.c080951d45e79cd25df98036c4be835b284a269c"
+  dart: ">=2.0.0-dev.28.0 <=2.0.0-edge.c080951d45e79cd25df98036c4be835b284a269c"
