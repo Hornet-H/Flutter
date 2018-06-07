@@ -9,6 +9,7 @@ class LayoutDemo extends StatelessWidget {
         ),
         body: new Container(
           child: new Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               new Row(children: <Widget>[
                 new RaisedButton(
@@ -37,15 +38,16 @@ class LayoutDemo extends StatelessWidget {
                 ),
               ]),
               new Column(
+
                 children: <Widget>[
                   new RaisedButton(
-                    child: new Text('还没看呢'),
+                    child: new Text('红色地带'),
                     onPressed: () {
                       print('点击粉色按钮事件');
                     },
                   ),
                   new RaisedButton(
-                    child: new Text('看过来'),
+                    child: new Text('灰色地带'),
                     onPressed: () {
                       print('点击粉色按钮事件');
                     },
