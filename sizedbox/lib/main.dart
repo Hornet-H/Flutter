@@ -10,11 +10,15 @@ class SizedBoxDemo extends StatelessWidget {
       body: new Center(child: new SizedBox(
         width: 250.0,
         height: 250.0,
-        child: new FlatButton(
-            onPressed: (){
-              },
-
-
+        child: new Container(
+          decoration: new BoxDecoration(
+            color: Colors.lightBlueAccent[100],
+            border: new Border.all(
+              color: const Color(0xff6d9eeb),
+              width: 8.0,
+            ),
+            borderRadius:new BorderRadius.all(new Radius.circular(10.0)),
+          ),
         ),
       ),)
     );
